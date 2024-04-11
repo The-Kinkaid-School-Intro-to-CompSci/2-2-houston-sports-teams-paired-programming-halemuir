@@ -186,25 +186,36 @@ function filterRoundFruits() {
     makeFruitCards(roundFruits);
 }
 
-
-
-function fruitFiltering() {
-    makeFruitCards(FRUITS);
-
-    //make a button to filter the fruits by roundness
-    const fruitRoundButton = document.createElement('button');
-    fruitRoundButton.textContent = "Filter Round Fruits";
-    fruitRoundButton.addEventListener('click', filterRoundFruits);
-
-    //Step 0A: Make a button to filter the fruits if they are yellow
-
-    //select the container for the buttons
-    const buttonsContainer = document.querySelector("#fruitButtonsContainer");
-    //add the button to the container
-    buttonsContainer.appendChild(fruitRoundButton);
-    //Step 0B: Add the button to the container, similar to the line above
-
+function filterYellowFruits() {
+    let yellowFruits = [];
+    for (const fruit of FRUITS) {
+        if(fruit.color === "yellow"){
+            yellowFruits.push(fruit);
+        }
+    }
+    makeFruitCards(yellowFruits);
 }
+
+// function fruitFiltering() {
+//     makeFruitCards(FRUITS);
+
+//     //make a button to filter the fruits by roundness
+//     const fruitRoundButton = document.createElement('button');
+//     fruitRoundButton.textContent = "Filter Round Fruits";
+//     fruitRoundButton.addEventListener('click', filterRoundFruits);
+//     const fruitYellowButton = document.createElement('button');
+//     fruitYellowButton.textContent = "Filter Yellow Fruits";
+//     fruitYellowButton.addEventListener('click', filterYellowFruits);
+//     //Step 0A: Make a button to filter the fruits if they are yellow
+
+//     //select the container for the buttons
+//     const buttonsContainer = document.querySelector("#fruitButtonsContainer");
+//     //add the button to the container
+//     buttonsContainer.appendChild(fruitRoundButton);
+//     buttonsContainer.appendChild(fruitYellowButton);
+//     //Step 0B: Add the button to the container, similar to the line above
+
+// }
 /***************************************** End Fruit Filtering: Step 0 */
 
 
@@ -216,9 +227,15 @@ function addPlayerCard(playerData){
 
     //make a new image
     let playerImage = document.createElement("img");
-    playerImage.src = '';
+    playerImage.src = playerData.image;
     playerImage.alt = '' + " headshot";
     playerImage.width = 200;
+
+    let playerJersey = document.createElement("p");
+    playerJersey.textContent = `Jersey Number: ` + playerData.jerseyNumber
+    
+    let playerPosition = document.createElement("p");
+    playerPosition.textContent = `Position: ` + playerData.position
 
     let playerName = document.createElement("h3");
     playerName.textContent = `Name: ${playerData.name}`;
@@ -229,6 +246,8 @@ function addPlayerCard(playerData){
     //append the player information to the player 'card'
     playerCard.appendChild(playerImage);
     playerCard.appendChild(playerName);
+    playerCard.appendChild(playerJersey);
+    playerCard.appendChild(playerPosition);
 
     //append the player card to the player cards container
     let playerCardsContainer = document.querySelector("#playerCardsContainer");
@@ -239,6 +258,9 @@ function setPlayerCards(players){
     console.log(players);
     //clear out the player cards
     clearCards("#playerCardsContainer");
+    for (player of players) {
+        addPlayerCard(player);
+    }
 
     // Step 4B: Loop through the players and add a card for each player
 
@@ -252,12 +274,15 @@ function updateTeamInfo(teamData){
     //update the team logo
     let teamLogo = document.querySelector("#teamLogo");
     //Step 2A: Update the team logo by setting it's source
-    teamLogo.src = '';
-    teamLogo.alt = '';
+    teamLogo.src = teamData.logo;
+    teamLogo.alt = teamData.teamName + `Logo`;
     teamLogo.width = 200;
 
     //Step 2B: Create a paragraph element with the team's sport and append it as a child to the team info container (id="teamInfoContainer")
-
+    let sportName = document.createElement("p");
+    let container = document.querySelector("#teamInfoContainer");
+    sportName.textContent = `Sport: ` + teamData.sport
+    container.appendChild(sportName)
 }
 
 /**
@@ -283,6 +308,15 @@ function filterbyGreaterThan15(players){
     setPlayerCards(playersGreaterThan15);
 }
 
+function filterbyDefense(players){
+    let defense = [];
+    for(const player of players){
+        if(player.position === "Defender"){
+            defense.push(player);
+        }
+    }
+    setPlayerCards(defense);
+}
 /**
  * A function to filter the players by a given value
  * @param {String} filterValue - the value to filter the players by
@@ -298,6 +332,9 @@ function filterPlayers(filterValue, players){
     else if(filterValue === "greaterThan15"){
         filterbyGreaterThan15(players);
     }
+    else if(filterValue === "positionDef"){
+        filterbyDefense(players);
+    }
 }
 
 /***************************************** End Sports Filtering */
@@ -307,32 +344,33 @@ function runProgram() {
     console.log("Program is running");
 
     //STEP 0: filter the  -- practice
-    fruitFiltering();
+    // fruitFiltering();
 
     //STEP 1A: get the team data of the team of your choice (ASTROS or DASH)
-    // let teamData = DASH;
+    let teamData = DASH;
 
     // STEP 1B: log the team data and look at the arrays. How is the information about the team arranged?
-    // console.log("Team data: ", teamData);
+    console.log("Team data: ", teamData);
 
 
     // STEP 2: update the team information
-    // updateTeamInfo(teamData);
+    updateTeamInfo(teamData);
 
     //STEP 3: Finish making a card for a single player
-    // let players = teamData.players;
-    // let firstPlayer = players[0];
-    // addPlayerCard(firstPlayer);
+    let players = teamData.players;
+    let firstPlayer = players[0];
+    addPlayerCard(firstPlayer);
 
     //STEP 4: Loop through the players and add a card for each player
-    setPlayerCards(/**. Step 4A: pass in array of players */);
+    setPlayerCards(teamData.players);
+    
 
     //STEP 5: Filter the players 
-    // let playerFilter = document.querySelector("#playersFilter");
-    // playerFilter.addEventListener("change", (event) => {
+    let playerFilter = document.querySelector("#playersFilter");
+    playerFilter.addEventListener("change", (event) => {
 
-    //     filterPlayers(event.target.value, teamData.players);
-    // });
+        filterPlayers(event.target.value, teamData.players);
+    });
 
 }
 
