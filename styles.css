@@ -1,0 +1,85 @@
+html {
+    font-family: sans-serif;
+  }
+  
+  :root {
+    --navy: #002d62;
+    --orange: #eb6e1f;
+    --light-orange: #f4911e;
+    --gray: #e7e9ea;
+  }
+  
+  body {
+    background-color: orange;
+    width: 50%;
+    max-width: 800px;
+    min-width: 480px;
+    margin: 0 auto;
+  }
+  
+  .center{
+    text-align: center;
+    display: block;
+    margin: 10px auto;
+  }
+  
+  .btnCenter{
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+  }
+  
+  .lightBlue{
+    color: lightblue;
+  }
+  
+  .arrowStyleBullet{
+    list-style-type: "→ ";
+    padding: 0;
+  }
+  
+  section{
+    margin: 20px;
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .simple-border{
+    border: 1px solid green;
+    padding: 20px;
+  }
+  
+  .cross-out {
+    text-decoration: line-through;
+  }
+  
+  
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .fruitCard {
+    background-color: white;
+    padding: 1.3rem;
+    margin: 1.1rem;
+    width: 200px;
+    border-radius: 15px;
+    border-color: var(--orange);
+    color: var(--navy);
+  }
+  
+  .playerCard {
+    background-color: var(--navy);
+    padding: 1.3rem;
+    margin: 1.2rem;
+    width: 250px;
+    border-radius: 15px;
+    border-color: var(--orange);
+    color: white;
+  }
+  
